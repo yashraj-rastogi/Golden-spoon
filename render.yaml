@@ -2,10 +2,19 @@ services:
   - type: web
     name: golden-spoon-recipe
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --no-input"
-    startCommand: "gunicorn wsgi:application"
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn Recipe_project.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: golden-spoon-recipe-db
+          property: connectionString
+
+databases:
+  - name: golden-spoon-recipe-db
+    databaseName: golden_spoon_recipe
+    user: golden_spoon_user
