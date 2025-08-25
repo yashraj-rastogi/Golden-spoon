@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Saved Recipes | Golden Spoon</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom color palette */
+        :root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-sans-inter text-warm-brown">
+    {% include 'header.html' %}
+
+    <!-- Header Section -->
+    <header class="w-full py-8 text-center mt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif-display font-bold mb-4" style="color: var(--burnt-orange);">My Saved Recipes</h1>
+        <p class="text-lg sm:text-xl text-gray-600 font-light">Your personal collection of favorite recipes</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {% if saved_recipes %}
+            <!-- Recipe Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {% for saved_recipe in saved_recipes %}
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <!-- Recipe Image -->
+                        <div class="relative overflow-hidden aspect-square">
+                            {% if saved_recipe.recipe.image %}
+                                <img src="{{ saved_recipe.recipe.image.url }}" 
+                                     alt="{{ saved_recipe.recipe.title }}" 
+                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                            {% else %}
+                                <div class="w-full h-full bg-soft-blush flex items-center justify-center">
+                                    <i class="fas fa-utensils text-6xl text-terracotta opacity-50"></i>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Saved Date Badge -->
+                            <div class="absolute top-3 right-3 bg-terracotta text-white px-2 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-bookmark mr-1"></i>
+                                {{ saved_recipe.saved_at|date:"M d" }}
+                            </div>
+                            
+                            <!-- Unsave Button -->
+                            <button onclick="unsaveRecipe('{{ saved_recipe.recipe.id }}')" 
+                                    class="absolute top-3 left-3 w-10 h-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-md hover:shadow-lg">
+                                <i class="fas fa-times text-red-500 text-sm"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Recipe Info -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif-display font-bold mb-2 text-warm-brown line-clamp-2">
+                                {{ saved_recipe.recipe.title }}
+                            </h3>
+                            
+                            <!-- Creator Info -->
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 bg-terracotta rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white text-xs"></i>
+                                </div>
+                                <span class="text-sm text-gray-600">by {{ saved_recipe.recipe.owner.first_name }} {{ saved_recipe.recipe.owner.last_name }}</span>
+                            </div>
+                            
+                            <!-- Recipe Description -->
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                                {{ saved_recipe.recipe.description|truncatewords:20 }}
+                            </p>
+                            
+                            <!-- View Recipe Button -->
+                            <a href="{% url 'view_recipe' saved_recipe.recipe.id %}" 
+                               class="w-full bg-terracotta hover:bg-burnt-orange text-white px-4 py-2 rounded-lg text-center font-semibold transition-colors duration-200 inline-block">
+                                <i class="fas fa-eye mr-2"></i>View Recipe
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="max-w-md mx-auto">
+                    <!-- Large Bookmark Icon -->
+                    <div class="w-24 h-24 bg-soft-blush rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-bookmark text-4xl text-terracotta opacity-70"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl font-serif-display font-bold mb-4" style="color: var(--terracotta);">No Saved Recipes Yet</h2>
+                    <p class="text-gray-600 mb-8 text-lg">Start building your personal cookbook by saving recipes you love!</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="{% url 'browse_recipes' %}" 
+                           class="bg-terracotta hover:bg-burnt-orange text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                            <i class="fas fa-search"></i>
+                            Browse Recipes
+                        </a>
+                        <a href="{% url 'profile' user.username %}" 
+                           class="border-2 border-terracotta text-terracotta hover:bg-terracotta hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                            <i class="fas fa-user"></i>
+                            Back to Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-8 px-8 rounded-t-3xl shadow-lg mt-16" style="background-color: var(--terracotta);">
+        <div class="container mx-auto text-center">
+            <span class="text-lg font-serif-display">&copy; 2025 Golden Spoon. All rights reserved.</span><br>
+            <span class="block mt-2 text-base font-serif-display">Made with love and flavour.</span>
+            <span class="block mt-1 text-base font-serif-display">"Where good food meets good company."</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Unsaving Recipes -->
+    <script>
+        async function unsaveRecipe(recipeId) {
+            try {
+                const response = await fetch(`/recipe/unsave/${recipeId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Reload the page to show updated saved recipes
+                    location.reload();
+                } else {
+                    alert('Error removing recipe from saved list.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error removing recipe from saved list.');
+            }
+        }
+    </script>
+
+    <!-- Hidden CSRF Token for JavaScript -->
+    <div style="display: none;">
+        {% csrf_token %}
+    </div>
+</body>
+</html>

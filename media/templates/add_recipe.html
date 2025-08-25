@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Recipe | Golden Spoon</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom color palette */
+        :root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-sans-inter text-warm-brown flex flex-col min-h-screen">
+    {% include 'header.html' %}
+
+    <!-- Header Section -->
+    <header class="w-full py-8 text-center mt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif-display font-bold mb-4" style="color: var(--burnt-orange);">Share Your Recipe</h1>
+        <p class="text-lg sm:text-xl text-gray-600 font-light">Add your favorite recipe to the Golden Spoon community</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-soft-blush rounded-2xl shadow-xl p-8 sm:p-12">
+                
+                <!-- Recipe Submission Form -->
+                <form method="post" enctype="multipart/form-data" class="space-y-8">
+                    {% csrf_token %}
+                    
+                    <!-- Recipe Name -->
+                    <div>
+                        <label for="recipeName" class="block text-lg font-semibold mb-3 text-terracotta">
+                            <i class="fas fa-utensils mr-2"></i>Recipe Name
+                        </label>
+                        <input type="text" id="recipeName" name="name" 
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-terracotta transition-colors duration-200" 
+                               placeholder="Enter your recipe name..." required>
+                    </div>
+                    
+                    <!-- Recipe Image -->
+                    <div>
+                        <label class="block text-lg font-semibold mb-3 text-terracotta">
+                            <i class="fas fa-camera mr-2"></i>Recipe Image
+                        </label>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="recipeImage" class="block text-sm font-medium mb-2 text-gray-600">Upload from device:</label>
+                                <input type="file" id="recipeImage" name="image" accept="image/*"
+                                       class="w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-terracotta file:text-white hover:file:bg-burnt-orange transition-colors duration-200">
+                            </div>
+                            <div class="text-center text-gray-500 font-medium">OR</div>
+                            <div>
+                                <label for="imageUrl" class="block text-sm font-medium mb-2 text-gray-600">Paste image URL:</label>
+                                <input type="url" id="imageUrl" name="image_url" 
+                                       placeholder="https://example.com/image.jpg" 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-terracotta transition-colors duration-200">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description/Steps -->
+                    <div>
+                        <label for="recipeDescription" class="block text-lg font-semibold mb-3 text-terracotta">
+                            <i class="fas fa-list-ol mr-2"></i>Recipe Description & Instructions
+                        </label>
+                        <textarea id="recipeDescription" name="description" rows="10" 
+                                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-terracotta transition-colors duration-200" 
+                                  placeholder="Share your recipe details, ingredients, and step-by-step instructions..." required></textarea>
+                        <p class="text-sm text-gray-500 mt-2">Include ingredients, cooking time, serving size, and detailed steps.</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="bg-terracotta hover:bg-burnt-orange text-white text-lg font-semibold py-4 px-8 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3 mx-auto">
+                            <i class="fas fa-plus-circle"></i>
+                            Add Recipe to Community
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Back to Recipes Link -->
+                <div class="mt-8 text-center">
+                    <a href="{% url 'browse_recipes' %}" class="text-terracotta hover:text-burnt-orange transition-colors duration-200 font-medium flex items-center justify-center gap-2">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Browse Recipes
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-8 px-8 rounded-t-3xl shadow-lg" style="background-color: var(--terracotta);">
+        <div class="container mx-auto text-center">
+            <span class="text-lg font-serif-display">&copy; 2025 Golden Spoon. All rights reserved.</span><br>
+            <span class="block mt-2 text-base font-serif-display">Made with love and flavour.</span>
+            <span class="block mt-1 text-base font-serif-display">"Where good food meets good company."</span>
+        </div>
+    </footer>
+</body>
+</html>

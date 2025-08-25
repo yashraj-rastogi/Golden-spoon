@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		/* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+		:root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+	</style>
+</head>
+<body class="font-sans min-h-screen">
+	{% include 'header.html' %}
+	<div class="min-h-screen flex items-center justify-center pt-20">
+		<div class="w-full max-w-md bg-white rounded-2xl p-8 shadow-lg border border-[var(--soft-blush)]">
+			<h1 class="text-3xl font-serif mb-6 text-[var(--terracotta)] text-center">Login</h1>
+			
+			<form method="post" class="space-y-4">
+				{% csrf_token %}
+				<div>
+					<label class="block text-sm text-[var(--terracotta)] font-medium">Username</label>
+					<input type="text" name="username" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none">
+				</div>
+				<div>
+					<label class="block text-sm text-[var(--terracotta)] font-medium">Password</label>
+					<input type="password" name="password" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none">
+				</div>
+				<button type="submit" class="w-full bg-[var(--terracotta)] hover:bg-[var(--light-terracotta)] text-white py-2 rounded-full transition font-semibold shadow">
+					Login
+				</button>
+			</form>
+			
+			<p class="mt-6 text-sm text-center">
+				Don't have an account? 
+				<a href="{% url 'signup' %}" class="text-[var(--terracotta)] hover:text-[var(--light-terracotta)] font-medium transition">
+					Sign up
+				</a>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

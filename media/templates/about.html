@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Golden Spoon</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom color palette */
+        :root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-sans-inter text-warm-brown flex flex-col min-h-screen">
+    {% include 'header.html' %}
+    
+    <!-- Header Section -->
+    <header class="w-full py-8 text-center mt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif-display font-bold mb-4" style="color: var(--burnt-orange);">About Golden Spoon</h1>
+        <p class="text-lg sm:text-xl text-gray-600 font-light">Where recipes become memories and food brings us together</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        
+        <!-- Main About Section -->
+        <div class="bg-soft-blush rounded-2xl p-8 sm:p-12 shadow-inner mb-16">
+            <div class="flex items-start gap-6 mb-8">
+                <!-- Kitchen Illustration SVG -->
+                <svg class="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 opacity-70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 5 L10 25 L10 85 L90 85 L90 25 Z" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M25 85 L25 55 M75 85 L75 55" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <rect x="25" y="55" width="50" height="30" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="50" cy="55" r="5" fill="var(--terracotta)" />
+                    <path d="M50 85 L50 95 M40 95 L60 95" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div>
+                    <h2 class="text-3xl font-serif-display font-bold mb-4" style="color: var(--terracotta);">Our Story</h2>
+                    <p class="text-base sm:text-lg leading-relaxed font-light italic mb-6" style="color: var(--warm-brown);">
+                        Golden Spoon was born from a simple belief: that the best recipes are the ones filled with memories. This isn't just a database of ingredients; it's a space to share the stories behind the food.
+                    </p>
+                    <p class="text-base sm:text-lg leading-relaxed font-light mb-6" style="color: var(--warm-brown);">
+                        From your grandmother's secret stew to the pasta dish you perfected on a lazy Sunday, every recipe has a soul. We've built this community for home cooks who find joy in the process and connection in the sharing.
+                    </p>
+                    <p class="text-base sm:text-lg leading-relaxed font-light" style="color: var(--warm-brown);">
+                        Whether you're a seasoned chef or someone who burns water, Golden Spoon welcomes you. Because at the end of the day, the best meals are the ones shared with love.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl sm:text-4xl font-serif-display font-bold text-center mb-12" style="color: var(--burnt-orange);">What Makes Us Special</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Feature 1 -->
+                <div class="bg-orange-200 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-serif-display font-semibold mb-3 text-terracotta">Made with Love</h3>
+                    <p class="text-gray-700">Every recipe shared here comes from the heart, carrying stories and traditions that make food special.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-orange-200 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-serif-display font-semibold mb-3 text-terracotta">Community Driven</h3>
+                    <p class="text-gray-700">Connect with fellow food lovers, share your creations, and discover new favorites from around the world.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-orange-200 rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-star text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-serif-display font-semibold mb-3 text-terracotta">Quality First</h3>
+                    <p class="text-gray-700">We believe in quality over quantity - every recipe is a treasure worth sharing and preserving.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center">
+            <div class="bg-soft-blush rounded-2xl p-8 sm:p-12 shadow-inner">
+                <h2 class="text-3xl font-serif-display font-bold mb-4" style="color: var(--terracotta);">Join Our Kitchen</h2>
+                <p class="text-lg text-gray-600 mb-8">Ready to share your culinary story with the world?</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{% url 'signup' %}" class="bg-terracotta hover:bg-burnt-orange text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                        <i class="fas fa-user-plus"></i>
+                        Join Community
+                    </a>
+                    <a href="{% url 'browse_recipes' %}" class="border-2 border-terracotta text-terracotta hover:bg-terracotta hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                        <i class="fas fa-utensils"></i>
+                        Browse Recipes
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-8 px-8 rounded-t-3xl shadow-lg" style="background-color: var(--terracotta);">
+        <div class="container mx-auto text-center">
+            <span class="text-lg font-serif-display">&copy; 2025 Golden Spoon. All rights reserved.</span><br>
+            <span class="block mt-2 text-base font-serif-display">Made with love and flavour.</span>
+            <span class="block mt-1 text-base font-serif-display">"Where good food meets good company."</span>
+        </div>
+    </footer>
+</body>
+</html>

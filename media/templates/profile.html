@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile_user.username }} - Profile | Golden Spoon</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom color palette */
+        :root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-sans-inter text-warm-brown flex flex-col min-h-screen">
+
+    {% include 'header.html' %}
+    
+    <!-- Profile Header Section -->
+    <header class="w-full py-8 text-center mt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif-display font-bold mb-4" style="color: var(--burnt-orange);">{{ profile_user.username }}'s Kitchen</h1>
+        <p class="text-lg sm:text-xl text-gray-600 font-light">Sharing culinary adventures and family recipes</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        
+        <!-- Profile Info Card -->
+        <div class="bg-soft-blush rounded-2xl p-8 sm:p-12 shadow-lg mb-12 text-center">
+            <div class="flex items-center justify-center gap-6 mb-6">
+          <!-- Profile Avatar -->
+          <div class="w-20 h-20 sm:w-24 sm:h-24 bg-terracotta rounded-full flex items-center justify-center text-[#C06145] text-2xl sm:text-3xl font-serif-display font-bold border-4 border-red-300 ">
+              {{ profile_user.username|first|upper }}
+          </div>
+          <div>
+              <h2 class="text-2xl sm:text-3xl font-serif-display font-bold" style="color: var(--terracotta);">{{ profile_user.username }}</h2>
+              <p class="text-base sm:text-lg text-gray-600">{{ profile_user.email }}</p>
+              <p class="text-sm text-gray-500 mt-2">{{ recipes|length }} Recipe{{ recipes|length|pluralize }} Shared</p>
+          </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons Section -->
+        {% if user == profile_user %}
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a href="{% url 'add_recipe' %}" 
+               class="bg-terracotta hover:bg-burnt-orange text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                <i class="fas fa-plus"></i>
+                Add New Recipe
+            </a>
+            <a href="{% url 'saved_recipes' %}" 
+               class="border-2 border-terracotta text-terracotta hover:bg-terracotta hover:text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                <i class="fas fa-bookmark"></i>
+                View Saved Recipes
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- My Recipes Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-center mb-12" style="color: var(--burnt-orange);">My Recipe Collection</h2>
+            
+            {% if recipes %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for recipe in recipes %}
+                    <div class="bg-orange-200 rounded-2xl shadow-lg overflow-hidden w-full max-w-sm mx-auto h-[420px] flex flex-col hover:shadow-2xl transition-shadow duration-300">
+                        <!-- Image Container: Fixed height -->
+                        <div class="h-48 w-full">
+                            {% if recipe.image %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="w-full h-full object-cover">
+                            {% else %}
+                            <div class="w-full h-full bg-soft-blush flex items-center justify-center">
+                                <span class="text-terracotta">No image available</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Content Container -->
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="text-xl font-serif-display font-semibold mb-2 text-terracotta">{{ recipe.name }}</h3>
+                            <p class="text-gray-700 text-sm line-clamp-3 mb-4">{{ recipe.description|truncatewords:15 }}</p>
+
+                            <!-- Button Container: Push to bottom -->
+                            <div class="mt-auto flex justify-between items-center">
+                                <button class="like-btn text-burnt-orange text-xl focus:outline-none">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <a href="{% url 'view_recipe' recipe.id %}"
+                                    class="bg-terracotta hover:bg-burnt-orange text-white px-4 py-2 rounded-full text-sm transition-colors duration-200">
+                                    View Recipe
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-soft-blush rounded-2xl p-8 sm:p-12 shadow-inner text-center">
+                    <div class="flex items-center justify-center gap-6 mb-6">
+                        <!-- Empty State Illustration -->
+                        <svg class="w-24 h-24 sm:w-32 sm:h-32 opacity-70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 5 L10 25 L10 85 L90 85 L90 25 Z" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M25 85 L25 55 M75 85 L75 55" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <rect x="25" y="55" width="50" height="30" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="50" cy="55" r="5" fill="var(--terracotta)" />
+                            <path d="M50 85 L50 95 M40 95 L60 95" fill="none" stroke="var(--terracotta)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div>
+                            <h3 class="text-2xl font-serif-display font-bold mb-2" style="color: var(--terracotta);">No Recipes Yet</h3>
+                            <p class="text-base sm:text-lg text-gray-600 mb-4">Start sharing your favorite recipes with the community!</p>
+                            <a href="/add/" class="bg-terracotta hover:bg-burnt-orange text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200">
+                                Add Your First Recipe
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-8 px-8 rounded-t-3xl shadow-lg" style="background-color: var(--terracotta);">
+        <div class="container mx-auto text-center">
+            <span class="text-lg font-serif-display">&copy; 2025 Golden Spoon. All rights reserved.</span><br>
+            <span class="block mt-2 text-base font-serif-display">Made with love and flavour.</span>
+            <span class="block mt-1 text-base font-serif-display">"Where good food meets good company."</span>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const icon = this.querySelector('i');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+                icon.classList.toggle('text-burnt-orange');
+                icon.classList.toggle('text-red-500');
+            });
+        });
+    </script>
+</body>
+</html>

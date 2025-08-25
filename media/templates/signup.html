@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sign Up</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+                /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+		:root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+	</style>
+</head>
+<body class="font-sans min-h-screen">
+	{% include 'header.html' %}
+	<div class="min-h-screen flex items-center justify-center pt-20">
+		<div class="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-[var(--soft-blush)]">
+			
+			<h1 class="text-3xl font-serif text-[var(--terracotta)] text-center mb-2">Create your account</h1>
+			<p class="text-sm text-gray-600 text-center mb-6">
+				Join Golden Spoon and start sharing your recipes with the community 🍴
+			</p>
+
+			<form method="post" class="space-y-4">
+				{% csrf_token %}
+				
+				<!-- Display form errors if any -->
+				{% if form.errors %}
+				<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+					<strong class="font-bold">Please correct the following errors:</strong>
+					<ul class="list-disc pl-5 mt-2">
+						{% for field in form %}
+							{% for error in field.errors %}
+							<li>{{ field.label }}: {{ error }}</li>
+							{% endfor %}
+						{% endfor %}
+						{% for error in form.non_field_errors %}
+						<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endif %}
+				
+				<!-- Username -->
+				<div>
+					<label class="block text-sm font-medium text-[var(--terracotta)]" for="id_username">Username</label>
+					<input type="text" name="username" id="id_username" value="{{ form.username.value|default:'' }}" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none focus:ring-1 focus:ring-[var(--light-terracotta)]" required>
+					<p class="text-xs text-gray-500 mt-1">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+				</div>
+
+				<!-- Email -->
+				<div>
+					<label class="block text-sm font-medium text-[var(--terracotta)]" for="id_email">Email</label>
+					<input type="email" name="email" id="id_email" value="{{ form.email.value|default:'' }}" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none focus:ring-1 focus:ring-[var(--light-terracotta)]" required>
+				</div>
+
+				<!-- Password -->
+				<div>
+					<label class="block text-sm font-medium text-[var(--terracotta)]" for="id_password1">Password</label>
+					<input type="password" name="password1" id="id_password1" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none focus:ring-1 focus:ring-[var(--light-terracotta)]" required>
+					<p class="text-xs text-gray-500 mt-1">Your password must contain at least 8 characters and can't be entirely numeric.</p>
+				</div>
+
+				<!-- Confirm Password -->
+				<div>
+					<label class="block text-sm font-medium text-[var(--terracotta)]" for="id_password2">Confirm Password</label>
+					<input type="password" name="password2" id="id_password2" class="w-full border border-[var(--soft-blush)] focus:border-[var(--terracotta)] px-3 py-2 rounded mt-1 focus:outline-none focus:ring-1 focus:ring-[var(--light-terracotta)]" required>
+					<p class="text-xs text-gray-500 mt-1">Enter the same password as before, for verification.</p>
+				</div>
+
+				<!-- Submit Button -->
+				<button type="submit" class="w-full bg-[var(--terracotta)] hover:bg-[var(--light-terracotta)] text-white py-2 rounded-full transition font-semibold shadow-md hover:shadow-lg">
+					Sign up
+				</button>
+			</form>
+
+			<p class="mt-6 text-sm text-center">
+				Already have an account? 
+				<a href="{% url 'login' %}" class="text-[var(--terracotta)] hover:text-[var(--light-terracotta)] font-medium transition">
+					Login
+				</a>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
+

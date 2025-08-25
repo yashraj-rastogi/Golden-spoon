@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Golden Spoon</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font classes */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom color palette */
+        :root {
+            --burnt-orange: #E55B13;
+            --soft-blush: #F5D6C6;
+            --honey-gold: #FFC07F;
+            --cream: #F5F5DC;
+            --terracotta: #C06145;
+            --warm-brown: #6A4A3C;
+        }
+
+        /* Body background with a subtle linear gradient */
+        body {
+            background: linear-gradient(to bottom, var(--cream), var(--soft-blush));
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-sans-inter text-warm-brown flex flex-col min-h-screen">
+    {% include 'header.html' %}
+    
+    <!-- Header Section -->
+    <header class="w-full py-8 text-center mt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif-display font-bold mb-4" style="color: var(--burnt-orange);">Get in Touch</h1>
+        <p class="text-lg sm:text-xl text-gray-600 font-light">We'd love to hear from you and your culinary adventures</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- Contact Form -->
+            <div class="bg-soft-blush rounded-2xl p-8 shadow-inner">
+                <h2 class="text-3xl font-serif-display font-bold mb-6" style="color: var(--terracotta);">Send us a Message</h2>
+                <form class="space-y-6">
+                    
+                    <!-- Name Input -->
+                    <div>
+                        <label for="name" class="block text-sm font-semibold mb-2" style="color: var(--warm-brown);">
+                            <i class="fas fa-user mr-2"></i>Your Name
+                        </label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full px-4 py-3 rounded-lg border-2 border-transparent focus:border-terracotta focus:outline-none transition-colors duration-200"
+                               style="background-color: var(--cream);"
+                               placeholder="Enter your full name">
+                    </div>
+
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block text-sm font-semibold mb-2" style="color: var(--warm-brown);">
+                            <i class="fas fa-envelope mr-2"></i>Email Address
+                        </label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-3 rounded-lg border-2 border-transparent focus:border-terracotta focus:outline-none transition-colors duration-200"
+                               style="background-color: var(--cream);"
+                               placeholder="your.email@example.com">
+                    </div>
+
+                    <!-- Subject Input -->
+                    <div>
+                        <label for="subject" class="block text-sm font-semibold mb-2" style="color: var(--warm-brown);">
+                            <i class="fas fa-tag mr-2"></i>Subject
+                        </label>
+                        <select id="subject" name="subject" required
+                                class="w-full px-4 py-3 rounded-lg border-2 border-transparent focus:border-terracotta focus:outline-none transition-colors duration-200"
+                                style="background-color: var(--cream);">
+                            <option value="">Choose a topic...</option>
+                            <option value="recipe-suggestion">Recipe Suggestion</option>
+                            <option value="technical-issue">Technical Issue</option>
+                            <option value="feedback">General Feedback</option>
+                            <option value="partnership">Partnership Inquiry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Message Textarea -->
+                    <div>
+                        <label for="message" class="block text-sm font-semibold mb-2" style="color: var(--warm-brown);">
+                            <i class="fas fa-comment mr-2"></i>Your Message
+                        </label>
+                        <textarea id="message" name="message" rows="5" required
+                                  class="w-full px-4 py-3 rounded-lg border-2 border-transparent focus:border-terracotta focus:outline-none transition-colors duration-200 resize-vertical"
+                                  style="background-color: var(--cream);"
+                                  placeholder="Tell us what's on your mind..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="w-full bg-terracotta hover:bg-burnt-orange text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 justify-center">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="space-y-8">
+                
+                <!-- FAQ Section -->
+                <div class="bg-orange-200 rounded-2xl p-8 shadow-lg">
+                    <h2 class="text-2xl font-serif-display font-bold mb-6" style="color: var(--terracotta);">Quick Questions?</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-warm-brown mb-2">How do I submit a recipe?</h3>
+                            <p class="text-gray-600 text-sm">Simply create an account and click "Add Recipe" in the navigation menu.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-warm-brown mb-2">Can I save my favorite recipes?</h3>
+                            <p class="text-gray-600 text-sm">Yes! Use the save button on any recipe to add it to your personal collection.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-warm-brown mb-2">Is Golden Spoon free to use?</h3>
+                            <p class="text-gray-600 text-sm">Absolutely! Our platform is completely free for all food enthusiasts.</p>
+                        </div>
+                    </div>
+                </div>
+               
+
+                <!-- Social Media -->
+                <div class="bg-soft-blush rounded-2xl p-8 shadow-inner">
+                    <h2 class="text-2xl font-serif-display font-bold mb-6" style="color: var(--terracotta);">Follow Our Journey</h2>
+                    <p class="text-gray-600 mb-6">Join our community on social media for daily recipe inspiration and cooking tips!</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 bg-terracotta hover:bg-burnt-orange rounded-full flex items-center justify-center text-white transition-colors duration-200">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-terracotta hover:bg-burnt-orange rounded-full flex items-center justify-center text-white transition-colors duration-200">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-terracotta hover:bg-burnt-orange rounded-full flex items-center justify-center text-white transition-colors duration-200">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-terracotta hover:bg-burnt-orange rounded-full flex items-center justify-center text-white transition-colors duration-200">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-8 px-8 rounded-t-3xl shadow-lg mt-16" style="background-color: var(--terracotta);">
+        <div class="container mx-auto text-center">
+            <span class="text-lg font-serif-display">&copy; 2025 Golden Spoon. All rights reserved.</span><br>
+            <span class="block mt-2 text-base font-serif-display">Made with love and flavour.</span>
+            <span class="block mt-1 text-base font-serif-display">"Where good food meets good company."</span>
+        </div>
+    </footer>
+</body>
+</html>
